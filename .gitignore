@@ -22,3 +22,11 @@ htmlcov/
 .idea/
 .DS_Store
 Thumbs.db
+
+# arquivos aleatorios
+teste_educ4.db
+testar_bd.py
+teste_classe.py
+estrutura_escrita_BD_Educ4.md
+normalizacao_BD_Educ4.md
+

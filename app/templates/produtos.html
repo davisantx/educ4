@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Produtos</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+    </head>
+    <body class="container py-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Produtos - {{ nome }}</h2>
+            <div>
+                <a
+                    href="{{ url_for('painel_admin') if perfil == 'admin' else url_for('painel_comum') }}"
+                    class="btn btn-outline-secondary me-2"
+                >
+                    Voltar ao Painel
+                </a>
+                <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Sair</a>
+            </div>
+        </div>
+
+        {% if erro %}
+        <div class="alert alert-danger">{{ erro }}</div>
+        {% endif %}
+
+        {% if perfil == 'admin' %}
+        <div class="card p-3 shadow-sm mb-4">
+            <h4>Cadastrar Produto</h4>
+            <form method="POST">
+                <input
+                    type="text"
+                    name="nome"
+                    placeholder="Nome do produto"
+                    class="form-control mb-2"
+                    required
+                />
+                <input
+                    type="number"
+                    name="preco"
+                    placeholder="Preço"
+                    step="0.01"
+                    min="0"
+                    class="form-control mb-2"
+                    required
+                />
+                <input
+                    type="number"
+                    name="quantidade"
+                    placeholder="Quantidade"
+                    step="1"
+                    min="0"
+                    class="form-control mb-2"
+                    required
+                />
+                <button type="submit" class="btn btn-success w-100">Salvar Produto</button>
+            </form>
+        </div>
+        {% endif %}
+
+        <div class="card p-3 shadow-sm mb-4">
+            <h4>Produtos Cadastrados</h4>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            {% if perfil == 'admin' %}
+                            <th>Ações</th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in produtos %}
+                        <tr>
+                            <td>{{ p.id }}</td>
+                            <td><b>{{ p.nome }}</b></td>
+                            <td>R$ {{ "%.2f"|format(p.preco) }}</td>
+                            <td>{{ p.quantidade }}</td>
+                            {% if perfil == 'admin' %}
+                            <td>
+                                <a
+                                    href="{{ url_for('editar_produto', id_produto=p.id) }}"
+                                    class="btn btn-primary btn-sm"
+                                >
+                                    Alterar
+                                </a>
+                                <form
+                                    method="POST"
+                                    action="{{ url_for('excluir_produto', id_produto=p.id) }}"
+                                    class="d-inline"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este produto?');"
+                                >
+                                    <button type="submit" class="btn btn-danger btn-sm">
+                                        Excluir
+                                    </button>
+                                </form>
+                            </td>
+                            {% endif %}
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

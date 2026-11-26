@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Comum</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Painel Usuário Comum - Bem-vindo, {{ nome }}.</h2>
+        <div>
+            <a href="{{ url_for('produtos') }}" class="btn btn-outline-primary me-2">Produtos</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-outline-danger">Sair</a>
+        </div>
+    </div>
+
+    {% if erro %}
+    <div class="alert alert-danger">{{ erro }}</div>
+    {% endif %}
+    {% if sucesso %}
+    <div class="alert alert-success">{{ sucesso }}</div>
+    {% endif %}
+
+    <div class="card p-3 shadow-sm mb-4">
+        <h4>Minhas Informações</h4>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Perfil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ id }}</td>
+                        <td><b>{{ nome }}</b></td>
+                        <td>{{ email }}</td>
+                        <td><span class="badge bg-secondary">comum</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card p-3 shadow-sm mb-4">
+        <h4>Alterar Meus Dados</h4>
+        <form method="POST" action="{{ url_for('atualizar_conta') }}">
+            <div class="mb-2">
+                <label class="form-label">Nome</label>
+                <input type="text" name="nome" value="{{ nome }}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">E-mail</label>
+                <input type="email" name="email" value="{{ email }}" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+        </form>
+    </div>
+
+    <div class="card p-3 shadow-sm mb-4">
+        <h4>Alterar Minha Senha</h4>
+        <form method="POST" action="{{ url_for('alterar_senha') }}">
+            <div class="mb-3">
+                <label class="form-label">Nova Senha</label>
+                <input type="password" name="nova_senha" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Alterar Senha</button>
+        </form>
+    </div>
+
+    <div class="card p-3 shadow-sm border-danger">
+        <h4 class="text-danger">Excluir Minha Conta</h4>
+        <p class="text-muted">Esta ação removerá sua conta permanentemente e encerrará sua sessão.</p>
+        <form method="POST" action="{{ url_for('excluir_conta') }}" onsubmit="return confirm('Tem certeza que deseja excluir sua conta?');">
+            <button type="submit" class="btn btn-danger">Excluir Conta</button>
+        </form>
+    </div>
+</body>
+</html>

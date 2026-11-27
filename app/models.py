@@ -87,9 +87,12 @@ class Administrador(Usuario):
 
 
 class Aluno(Usuario):
-    def __init__(self, matricula, cursos):
+    def __init__(
+        self, id: int, nome: str, login: str, senha: str, matricula: str, cursos: list
+    ):
+        super().__init__(id, nome, login, senha)
         self.__matricula = matricula
-        self.__cursos = list[Curso]
+        self.__cursos: list[Curso] = cursos
 
     @property
     def matricula(self):
@@ -104,9 +107,10 @@ class Aluno(Usuario):
         return self.__cursos
 
     @cursos.setter
-    def cursos(self, valor): pass
+    def cursos(self, valor):
+        pass
         # self.__cursos = valor
-        
+
     @staticmethod
     def listar_cursos(id_aluno: int):
         """
@@ -114,34 +118,56 @@ class Aluno(Usuario):
         """
         pass
 
+    def __str__(self) -> str:
+        return f"ID: {self.id} | nome: {self.nome} | login: {self.login} | senha: {self.senha} | matricula: {self.__matricula} | cursos: {self.__cursos}"
+
 
 class Professor(Usuario):
     pass
 
 
 class Nota:
-    def __init__(self, atividade_1, atividade_2, atividade_3, trabalho_final):
+    def __init__(
+        self,
+        atividade_1: float,
+        atividade_2: float,
+        atividade_3: float,
+        trabalho_final: float,
+    ):
         self.__atividade_1 = atividade_1
         self.__atividade_2 = atividade_2
         self.__atividade_3 = atividade_3
         self.__trabalho_final = trabalho_final
 
     @property
-    def atividade_1(self): return self.__atividade_1
+    def atividade_1(self):
+        return self.__atividade_1
 
     @property
-    def atividade_2(self): return self.__atividade_2
+    def atividade_2(self):
+        return self.__atividade_2
 
     @property
-    def atividade_3(self): return self.__atividade_3
+    def atividade_3(self):
+        return self.__atividade_3
 
     @property
-    def trabalho_final(self): return self.__trabalho_final
+    def trabalho_final(self):
+        return self.__trabalho_final
 
     @property
     def media(self):
-        return (self.__atividade_1 + self.__atividade_2 + self.__atividade_3 + self.__trabalho_final) / 4
-    
+        return (
+            self.__atividade_1
+            + self.__atividade_2
+            + self.__atividade_3
+            + self.__trabalho_final
+        ) / 4
+
+    def __str__(self) -> str:
+        return f"Atividade 1: {self.__atividade_1} | Atividade 2: {self.__atividade_2} | Atividade 3: {self.__atividade_3} | Trabalho Final: {self.__trabalho_final}"
+
+
 class Curso:
     def __init__(
         self,
@@ -175,8 +201,7 @@ class Curso:
     @property
     def nota(self):
         return self.__nota
-        
-    
+
     @staticmethod
     def listar_cursos():
         """
@@ -188,7 +213,14 @@ class Curso:
             for id_p, nome, preco, quantidade in produtos
         ]
 
+    def __str__(self) -> str:
+        return f"nome: {self.__nome} | professor: {self.__professor} | carga_horaria: {self.__carga_horaria} | descricao: {self.__descricao} | nota: {self.__nota}" 
 
 if __name__ == "__main__":
     usuario = Usuario(1, "K", "A", "B")
+    aluno = Aluno(2, "A", "B", "C", "dsds", [])
+    admin = Administrador(2, "K", "A", "B")
+
     print(usuario)
+    print(aluno)
+    print(admin)

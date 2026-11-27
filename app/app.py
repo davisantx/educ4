@@ -1,6 +1,5 @@
-from flask import Flask, redirect, render_template, request, session, url_for
-
 from database import criar_tabela, preencher_dados_iniciais
+from flask import Flask, redirect, render_template, request, session, url_for
 from models import Administrador, Comum, Produto, Usuario
 
 app = Flask(__name__)
@@ -15,7 +14,7 @@ def login():
         )
         if not usuario:
             return render_template("login.html", erro="E-mail ou senha incorretos!")
-            
+
         session["user_id"] = usuario.id
         session["user_nome"] = usuario.nome
         session["user_email"] = usuario.email
@@ -25,7 +24,7 @@ def login():
             return redirect(url_for("painel_admin"))
         elif usuario.perfil == "comum":
             return redirect(url_for("painel_comum"))
-            
+
     return render_template("login.html", erro=None)
 
 

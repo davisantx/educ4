@@ -88,9 +88,25 @@ class Administrador(Usuario):
 
 class Aluno(Usuario):
     def __init__(self, matricula, cursos):
-        self.matricula = matricula
-        self.cursos = cursos
+        self.__matricula = matricula
+        self.__cursos = list[Curso]
 
+    @property
+    def matricula(self):
+        return self.__matricula
+
+    @matricula.setter
+    def matricula(self, valor):
+        pass
+
+    @property
+    def cursos(self):
+        return self.__cursos
+
+    @cursos.setter
+    def cursos(self, valor): pass
+        # self.__cursos = valor
+        
     @staticmethod
     def listar_cursos(id_aluno: int):
         """
@@ -105,12 +121,27 @@ class Professor(Usuario):
 
 class Nota:
     def __init__(self, atividade_1, atividade_2, atividade_3, trabalho_final):
-        self.atividade_1 = atividade_1
-        self.atividade_2 = atividade_2
-        self.atividade_3 = atividade_3
-        self.trabalho_final = trabalho_final
+        self.__atividade_1 = atividade_1
+        self.__atividade_2 = atividade_2
+        self.__atividade_3 = atividade_3
+        self.__trabalho_final = trabalho_final
 
+    @property
+    def atividade_1(self): return self.__atividade_1
 
+    @property
+    def atividade_2(self): return self.__atividade_2
+
+    @property
+    def atividade_3(self): return self.__atividade_3
+
+    @property
+    def trabalho_final(self): return self.__trabalho_final
+
+    @property
+    def media(self):
+        return (self.__atividade_1 + self.__atividade_2 + self.__atividade_3 + self.__trabalho_final) / 4
+    
 class Curso:
     def __init__(
         self,
@@ -120,12 +151,32 @@ class Curso:
         descricao: str,
         nota: Nota,
     ):
-        self.nome = nome
-        self.professor = professor
-        self.carga_horaria = carga_horaria
-        self.descricao = descricao
-        self.nota = nota
+        self.__nome = nome
+        self.__professor = professor
+        self.__carga_horaria = carga_horaria
+        self.__descricao = descricao
+        self.__nota = nota
 
+    @property
+    def nome(self):
+        return self.__nome
+
+    def professor(self):
+        return self.__professor
+
+    @property
+    def carga_horaria(self):
+        return self.__carga_horaria
+
+    @property
+    def descricao(self):
+        return self.__descricao
+
+    @property
+    def nota(self):
+        return self.__nota
+        
+    
     @staticmethod
     def listar_cursos():
         """
@@ -140,6 +191,4 @@ class Curso:
 
 if __name__ == "__main__":
     usuario = Usuario(1, "K", "A", "B")
-    print(usuario)
-    usuario.id = 2
     print(usuario)
